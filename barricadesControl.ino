@@ -29,7 +29,7 @@ void entryBarricadesClosing(unsigned long curMillisBarricades) {
 }
 
 void doBarricadesClosing(unsigned long curMillisBarricades) {
-
+  checkWaiting();
   doOrangeFlicker(curMillisBarricades);
   speakerBuzz(curMillisBarricades, false);
   if (curMillisBarricades - prevMillisBarricades >= BARRICADE_INTERVAL) {
@@ -53,7 +53,7 @@ void entryBarricadesOpening(unsigned long curMillisBarricades) {
 }
 
 void doBarricadesOpening(unsigned long curMillisBarricades) {
-  
+  checkWaiting();
   doOrangeFlicker(curMillisBarricades);
   if (curMillisBarricades - prevMillisBarricades >= BARRICADE_INTERVAL) {
     if (currentServoAngle > BARRICADE_MIN_ANGLE) {
@@ -86,6 +86,7 @@ void exitBarricadesClosing() {
 }
 
 void doBarricadesClosed(unsigned long mills) {
+  checkWaiting();
   doOrangeFlicker(mills);  
 }
 
@@ -94,6 +95,7 @@ void exitBarricadesOpening() {
 }
 
 void doBarricadesOpened() {
+  checkWaiting();
   countdownDisplay(millis());
   doOrangeFlicker(millis());
   speakerBuzz(millis(), true);  
