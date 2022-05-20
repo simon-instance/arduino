@@ -96,6 +96,12 @@ boolean getEmergency() {
 }
 
 unsigned long entryEmergencyOrangeStart;
+unsigned long emergencyCooldown;
+
+unsigned long getEmergencyCooldown() {
+  return emergencyCooldown;  
+}
+
 void entryEmergencyOrange(unsigned long curMillis) {
   entryEmergencyOrangeStart = curMillis;
   if (appState == NORTH_GREEN) {
@@ -106,6 +112,7 @@ void entryEmergencyOrange(unsigned long curMillis) {
     trafficLightPins[0][2] = true;
   }
   emergency = true;
+  emergencyCooldown = getPotmeter() * 1500;
 }
 
 void setEmergency(boolean toggle) {
@@ -133,7 +140,7 @@ void entryOrange(unsigned long curMillis) {
 }
 
 boolean checkOrangeLightTimeElapsed(unsigned long curMillis) {
-  if (curMillis - entryEmergencyOrangeStart >= ORANGE_LIGHT_INTERVAL) {
+  if (curMillis - entryEmergencyOrangeStart >= ORANGE_LIGHT_INTERVAL + (emergency ? emergencyCooldown : 0)) {
     return true;
   }
   return false;
